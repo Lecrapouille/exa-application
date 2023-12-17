@@ -1,3 +1,5 @@
 cef_binary
 ExaequOS/
 *~
+DawnCache*
+GPUCache*
