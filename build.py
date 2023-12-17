@@ -41,9 +41,11 @@ from os import fdopen, remove
 ###############################################################################
 ### Global user settings
 # CEF version downloaded from https://cef-builds.spotifycdn.com/index.html
-CEF_VERSION = "119.4.3+gc76a3b9+chromium-119.0.6045.159"
+CEF_VERSION = "120.1.8+ge6b45b0+chromium-120.0.6099.109"
 CEF_TARGET = "Release"             # or "Debug"
 CMAKE_MIN_VERSION = "3.19"         # Minimun CMake version needed for compiling CEF
+DEFAULT_URL = "https://www.exaequos.com"
+APPLICATION_NAME = "ExaequOS"
 
 PWD = os.getcwd()
 
@@ -276,13 +278,13 @@ def patch_cef():
 
         # Patch simple_app.cc to change application name and URL
         f = os.path.join(THIRDPARTY_CEF_PATH, "tests", "cefsimple", "simple_app.cc")
-        replace(f, "url = command_line->GetSwitchValue(\"url\");", "url = \"https://www.exaequos.com\";")
-        replace(f, "http://www.google.com", "https://www.exaequos.com")
-        replace(f, "\"cefsimple\"", "\"ExaequOS\"")
+        replace(f, "url = command_line->GetSwitchValue(\"url\");", "url = \"" + DEFAULT_URL + "\";")
+        replace(f, "http://www.google.com", DEFAULT_URL)
+        replace(f, "\"cefsimple\"", "\"" + APPLICATION_NAME + "\"")
 
         # Patch CMakeLists.txt
         f = os.path.join(THIRDPARTY_CEF_PATH, "tests", "cefsimple", "CMakeLists.txt")
-        replace(f, "\"cefsimple", "\"ExaequOS")
+        replace(f, "\"cefsimple", "\"" + APPLICATION_NAME)
 
 ###############################################################################
 ### Compile Chromium Embedded Framework cefsimple example if not already made
